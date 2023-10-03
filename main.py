@@ -19,14 +19,14 @@ vermelho = '#f50707'
 janela = Tk()
 janela.title('')
 janela.geometry('460x560')
-janela.configure(background=preto)
+janela.configure(background=branco)
 janela.resizable(width=FALSE, height=FALSE)
 
 style = Style(janela)
 style.theme_use('clam')
 
 #Frames
-frameCima = Frame(janela, width=450, height=50, bg=preto, relief='flat',) 
+frameCima = Frame(janela, width=480, height=50, bg=preto, relief='flat',) 
 frameCima.grid(row=0, column=0)
 
 framePergunta = Frame(janela, width=450, height=60, bg=branco, relief='solid',)
@@ -49,7 +49,7 @@ logo.place(x=5, y=0)
 nome = Label(frameCima, text='Recomendações de Filmes', compound=LEFT, padx=5, 
              relief=FLAT, anchor=NW, font=('Verdana 15'), bg=preto, fg=branco)
 nome.place(x=60, y=7)
-linha = Label(frameCima, width=450, height=1, anchor=NW, font=('Verdana 1'), bg=vermelho, fg=branco)
+linha = Label(frameCima, width=500, height=1, anchor=NW, font=('Verdana 1'), bg=vermelho, fg=branco)
 linha.place(x=0, y=47)
 
 #Pergunta
@@ -57,7 +57,7 @@ pergunta = Label(framePergunta, text='Olá, quero te ajudar a escolher um filme!
                  width=45, height=2, wraplength=320, justify='center', compound=CENTER, 
                  padx=5, relief=FLAT, anchor=NW, font=('Verdana 11'), bg=branco, fg=preto)
 pergunta.place(x=0, y=7)
-linha = Label(framePergunta, width=450, height=1, anchor=NW, font=('Verdana 1'), bg=vermelho, fg=branco)
+linha = Label(framePergunta, width=500, height=1, anchor=NW, font=('Verdana 1'), bg=vermelho, fg=branco)
 linha.place(x=0, y=57)
 
 #funcao resultado
