@@ -1,12 +1,12 @@
 import requests
-
+from random import randint
 
 def sugere_filme(i):
     api_key = 'c585c325aabfd4e3d16539e628332769'
     genero = acha_genero(i)
     url = f"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&sort_by=popularity.desc&with_genres={genero}&vote_count.gte=4"
     resposta = requests.get(url).json()
-    
+
     if resposta['results']:
         titulos = [resultado['title'] for resultado in resposta['results'][:3]]
         datas = [resultado['release_date'] for resultado in resposta['results'][:3]]

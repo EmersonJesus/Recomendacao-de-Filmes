@@ -101,12 +101,12 @@ def resultado(i):
     pedido1 = requests.get(poster_url_1)
     poster_1 = Image.open(BytesIO(pedido1.content))
     
-    capa1 = poster_1
-    capa1 = capa1.resize((150,250))
-    capa1 = ImageTk.PhotoImage(capa1)
+    capa_1 = poster_1
+    capa_1 = capa_1.resize((150,250))
+    capa_1 = ImageTk.PhotoImage(capa_1)
     
     #Poster
-    l_capa_1 = Label(filme_1, image=capa1, padx=5, bg=branco, fg=preto)
+    l_capa_1 = Label(filme_1, image=capa_1, padx=5, bg=branco, fg=preto)
     l_capa_1.place(x=5, y=0)   
     
 #Frame meio
