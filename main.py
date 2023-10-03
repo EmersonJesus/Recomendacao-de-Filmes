@@ -4,6 +4,8 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from sistema import *
 from datetime import datetime
+import requests
+from io import BytesIO
 
 #Cores
 preto = '#2e2d2b'
@@ -89,7 +91,24 @@ def resultado(i):
     data_formatada = data_1.strftime('%Y')
     l_data_1 = Label(filme_1, text=f'Lançamento: {data_formatada}', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
     l_data_1.place(x=5, y=310)
-
+    #Nota
+    l_nota_1 = Label(filme_1, text=f'Média: {nota[0]}/10', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
+    l_nota_1.place(x=5, y=330)
+    #Obtendo a imagem
+    pedido1 = requests.get(f'{poster[0]}')
+    poster_url_1 = pedido1.url
+    #Carregando a imagem
+    pedido1 = requests.get(poster_url_1)
+    poster_1 = Image.open(BytesIO(pedido1.content))
+    
+    capa1 = poster_1
+    capa1 = capa1.resize((150,250))
+    capa1 = ImageTk.PhotoImage(capa1)
+    
+    #Poster
+    l_capa_1 = Label(filme_1, image=capa1, padx=5, bg=branco, fg=preto)
+    l_capa_1.place(x=5, y=0)   
+    
 #Frame meio
 #Botões
 terror = Image.open('image/terror.png')

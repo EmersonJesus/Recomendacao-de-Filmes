@@ -15,6 +15,7 @@ def sugere_filme(i):
         caminho = 'https://www.themoviedb.org/t/p/w220_and_h330_face/'
         caminho_capas = [caminho + resultado['poster_path'].strip('/') for resultado in resposta['results'][:3]]
         
+        
         return [titulos, caminho_capas, datas, notas]
 
 def acha_genero(i):
