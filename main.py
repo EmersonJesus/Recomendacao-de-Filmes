@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 from sistema import *
+from datetime import datetime
 
 #Cores
 preto = '#2e2d2b'
@@ -62,9 +63,32 @@ def resultado(i):
     global capa_1, capa_2, capa_3 
     
     #Filmes Sugeridos
-    sugeridos = sugere_filme(api_key)
+    sugeridos = sugere_filme(i)
     
-    titulos = sugeridos['']
+    titulos = sugeridos[0]
+    poster = sugeridos[1]
+    data = sugeridos[2]
+    nota = sugeridos[3]
+    
+    #limpando frame baixo
+    for widget in frameBaixo.winfo_children():
+        widget.destroy()
+    
+    #Criando frame para cada filme
+    #Filme 1
+    filme_1 = Frame(frameBaixo, width=150, height=400, bg=branco)
+    filme_1.grid(row=0, column=0, sticky=NSEW, pady=5)
+    #Nome
+    filme_nome = Label(filme_1, text=f'{titulos[0]}', height=2, padx=10, pady=5,
+             wraplength=100, justify='left', relief=SOLID, anchor=NW, font=('Ivy 9'), 
+             bg=branco, fg=preto, bd=1, highlightbackground='white')
+    filme_nome.place(x=7, y=260)
+    #Data
+    data_string_1 = f'{data[0]}'
+    data_1 = datetime.strptime(data_string_1, '%Y-%m-%d')
+    data_formatada = data_1.strftime('%Y')
+    l_data_1 = Label(filme_1, text=f'Lançamento: {data_formatada}', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
+    l_data_1.place(x=5, y=310)
 
 #Frame meio
 #Botões

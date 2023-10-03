@@ -1,18 +1,21 @@
 import requests
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
 
 def sugere_filme(i):
+    api_key = 'c585c325aabfd4e3d16539e628332769'
     genero = acha_genero(i)
     url = f"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&sort_by=popularity.desc&with_genres={genero}&vote_count.gte=4"
     resposta = requests.get(url).json()
     
     if resposta['results']:
-        titulo = [resultado['title'] for resultado in resposta['results'][:5]]
-        print("Recomendo os seguintes filmes para você:")
-        for titulo in titulo:
-           print(f"- {titulo}")
-    else:
-        print("Não encontrei nenhuma sugestão de filme para você.")
+        titulos = [resultado['title'] for resultado in resposta['results'][:3]]
+        datas = [resultado['release_date'] for resultado in resposta['results'][:3]]
+        notas = [resultado['vote_average'] for resultado in resposta['results'][:3]]
+        
+        caminho = 'https://www.themoviedb.org/t/p/w220_and_h330_face/'
+        caminho_capas = [caminho + resultado['poster_path'].strip('/') for resultado in resposta['results'][:3]]
+        
+        return [titulos, caminho_capas, datas, notas]
 
 def acha_genero(i):
     if i == 'DRAMA':
@@ -25,5 +28,3 @@ def acha_genero(i):
         genero = "27" 
     return genero
 
-api_key = 'c585c325aabfd4e3d16539e628332769'
-analyzer = SentimentIntensityAnalyzer()
