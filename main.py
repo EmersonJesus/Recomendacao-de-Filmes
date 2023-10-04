@@ -108,7 +108,41 @@ def resultado(i):
     #Poster
     l_capa_1 = Label(filme_1, image=capa_1, padx=5, bg=branco, fg=preto)
     l_capa_1.place(x=5, y=0)   
+   
+    #Filme 2
+    filme_2 = Frame(frameBaixo, width=150, height=400, bg=branco)
+    filme_2.grid(row=0, column=1, sticky=NSEW, pady=5)
+    #Nome
+    filme_nome2 = Label(filme_2, text=f'{titulos[1]}', height=2, padx=10, pady=5,
+             wraplength=100, justify='left', relief=SOLID, anchor=NW, font=('Ivy 9'), 
+             bg=branco, fg=preto, bd=1, highlightbackground='white')
+    filme_nome2.place(x=7, y=260)
+    #Data
+    data_string_2 = f'{data[1]}'
+    data_2 = datetime.strptime(data_string_2, '%Y-%m-%d')
+    data_formatada = data_2.strftime('%Y')
+    l_data_2 = Label(filme_2, text=f'Lançamento: {data_formatada}', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
+    l_data_2.place(x=5, y=310)
+    #Nota
+    l_nota_2 = Label(filme_2, text=f'Média: {nota[1]}/10', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
+    l_nota_2.place(x=5, y=330)
+    #Obtendo a imagem
+    pedido2 = requests.get(f'{poster[1]}')
+    poster_url_2 = pedido2.url
+    #Carregando a imagem
+    pedido2 = requests.get(poster_url_2)
+    poster_2 = Image.open(BytesIO(pedido2.content))
     
+    capa_2 = poster_2
+    capa_2 = capa_2.resize((150,250))
+    capa_2 = ImageTk.PhotoImage(capa_2)
+    
+    #Poster
+    l_capa_2 = Label(filme_2, image=capa_2, padx=5, bg=branco, fg=preto)
+    l_capa_2.place(x=5, y=0)
+   
+   
+   
 #Frame meio
 #Botões
 terror = Image.open('image/terror.png')

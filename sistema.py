@@ -8,7 +8,7 @@ def sugere_filme(i):
     resposta = requests.get(url).json()
     if resposta['results']:
         # Embaralhe aleatoriamente os resultados
-        resultados_embaralhados = random.sample(resposta['results'], min(3, len(resposta['results'])))
+        resultados_embaralhados = random.sample(resposta['results'], min(3, len(resposta['results'])-1))
         
         titulos = [resultado['title'] for resultado in resultados_embaralhados]
         datas = [resultado['release_date'] for resultado in resultados_embaralhados]
