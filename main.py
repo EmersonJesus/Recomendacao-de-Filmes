@@ -141,6 +141,37 @@ def resultado(i):
     l_capa_2 = Label(filme_2, image=capa_2, padx=5, bg=branco, fg=preto)
     l_capa_2.place(x=5, y=0)
    
+    #Filme 3
+    filme_3 = Frame(frameBaixo, width=150, height=400, bg=branco)
+    filme_3.grid(row=0, column=2, sticky=NSEW, pady=5)
+    #Nome
+    filme_nome3 = Label(filme_3, text=f'{titulos[2]}', height=2, padx=10, pady=5,
+             wraplength=100, justify='left', relief=SOLID, anchor=NW, font=('Ivy 9'), 
+             bg=branco, fg=preto, bd=1, highlightbackground='white')
+    filme_nome3.place(x=7, y=260)
+    #Data
+    data_string_3 = f'{data[2]}'
+    data_3 = datetime.strptime(data_string_3, '%Y-%m-%d')
+    data_formatada = data_3.strftime('%Y')
+    l_data_3 = Label(filme_3, text=f'Lançamento: {data_formatada}', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
+    l_data_3.place(x=5, y=310)
+    #Nota
+    l_nota_3 = Label(filme_3, text=f'Média: {nota[2]}/10', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
+    l_nota_3.place(x=5, y=330)
+    #Obtendo a imagem
+    pedido3 = requests.get(f'{poster[2]}')
+    poster_url_3 = pedido3.url
+    #Carregando a imagem
+    pedido3 = requests.get(poster_url_3)
+    poster_3 = Image.open(BytesIO(pedido3.content))
+    
+    capa_3 = poster_3
+    capa_3 = capa_3.resize((150,250))
+    capa_3 = ImageTk.PhotoImage(capa_3)
+    
+    #Poster
+    l_capa_3 = Label(filme_3, image=capa_3, padx=5, bg=branco, fg=preto)
+    l_capa_3.place(x=5, y=0)
    
    
 #Frame meio
