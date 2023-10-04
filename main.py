@@ -63,7 +63,7 @@ linha.place(x=0, y=57)
 #funcao resultado
 def resultado(i):
     global capa_1, capa_2, capa_3 
-    
+
     #Filmes Sugeridos
     sugeridos = sugere_filme(i)
     
