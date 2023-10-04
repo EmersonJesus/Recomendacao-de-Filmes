@@ -62,9 +62,10 @@ linha.place(x=0, y=57)
 
 #funcao resultado
 def resultado(i):
-    global capa_1, capa_2, capa_3 
-
-    #Filmes Sugeridos
+    global capa1, capa2, capa3
+    capa1 = capa2 = capa3 = None
+    
+    # Filmes Sugeridos
     sugeridos = sugere_filme(i)
     
     titulos = sugeridos[0]
@@ -72,108 +73,60 @@ def resultado(i):
     data = sugeridos[2]
     nota = sugeridos[3]
     
-    #limpando frame baixo
+    # Limpando frame baixo
     for widget in frameBaixo.winfo_children():
         widget.destroy()
-    
-    #Criando frame para cada filme
-    #Filme 1
-    filme_1 = Frame(frameBaixo, width=150, height=400, bg=branco)
-    filme_1.grid(row=0, column=0, sticky=NSEW, pady=5)
-    #Nome
-    filme_nome = Label(filme_1, text=f'{titulos[0]}', height=2, padx=10, pady=5,
-             wraplength=100, justify='left', relief=SOLID, anchor=NW, font=('Ivy 9'), 
-             bg=branco, fg=preto, bd=1, highlightbackground='white')
+        
+    # Criar frames e widgets para os filmes
+    criar_frame_filme(frameBaixo, titulos[0], data[0], nota[0], poster[0])
+    criar_frame_filme(frameBaixo, titulos[1], data[1], nota[1], poster[1])
+    criar_frame_filme(frameBaixo, titulos[2], data[2], nota[2], poster[2])
+
+
+def criar_frame_filme(frame, titulo, data, nota, poster_url):
+    global capa1, capa2, capa3
+
+    filme = Frame(frame, width=150, height=400, bg=branco)
+    filme.grid(row=0, column=frame.grid_size()[0], sticky=NSEW, pady=5)
+
+    # Nome
+    filme_nome = Label(filme, text=titulo, height=2, padx=10, pady=5,
+                       wraplength=100, justify='left', relief=SOLID, anchor=NW,
+                       font=('Ivy 9'), bg=branco, fg=preto, bd=1, highlightbackground='white')
     filme_nome.place(x=7, y=260)
-    #Data
-    data_string_1 = f'{data[0]}'
-    data_1 = datetime.strptime(data_string_1, '%Y-%m-%d')
-    data_formatada = data_1.strftime('%Y')
-    l_data_1 = Label(filme_1, text=f'Lançamento: {data_formatada}', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
-    l_data_1.place(x=5, y=310)
-    #Nota
-    l_nota_1 = Label(filme_1, text=f'Média: {nota[0]}/10', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
-    l_nota_1.place(x=5, y=330)
-    #Obtendo a imagem
-    pedido1 = requests.get(f'{poster[0]}')
-    poster_url_1 = pedido1.url
-    #Carregando a imagem
-    pedido1 = requests.get(poster_url_1)
-    poster_1 = Image.open(BytesIO(pedido1.content))
-    
-    capa_1 = poster_1
-    capa_1 = capa_1.resize((150,250))
-    capa_1 = ImageTk.PhotoImage(capa_1)
-    
-    #Poster
-    l_capa_1 = Label(filme_1, image=capa_1, padx=5, bg=branco, fg=preto)
-    l_capa_1.place(x=5, y=0)   
-   
-    #Filme 2
-    filme_2 = Frame(frameBaixo, width=150, height=400, bg=branco)
-    filme_2.grid(row=0, column=1, sticky=NSEW, pady=5)
-    #Nome
-    filme_nome2 = Label(filme_2, text=f'{titulos[1]}', height=2, padx=10, pady=5,
-             wraplength=100, justify='left', relief=SOLID, anchor=NW, font=('Ivy 9'), 
-             bg=branco, fg=preto, bd=1, highlightbackground='white')
-    filme_nome2.place(x=7, y=260)
-    #Data
-    data_string_2 = f'{data[1]}'
-    data_2 = datetime.strptime(data_string_2, '%Y-%m-%d')
-    data_formatada = data_2.strftime('%Y')
-    l_data_2 = Label(filme_2, text=f'Lançamento: {data_formatada}', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
-    l_data_2.place(x=5, y=310)
-    #Nota
-    l_nota_2 = Label(filme_2, text=f'Média: {nota[1]}/10', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
-    l_nota_2.place(x=5, y=330)
-    #Obtendo a imagem
-    pedido2 = requests.get(f'{poster[1]}')
-    poster_url_2 = pedido2.url
-    #Carregando a imagem
-    pedido2 = requests.get(poster_url_2)
-    poster_2 = Image.open(BytesIO(pedido2.content))
-    
-    capa_2 = poster_2
-    capa_2 = capa_2.resize((150,250))
-    capa_2 = ImageTk.PhotoImage(capa_2)
-    
-    #Poster
-    l_capa_2 = Label(filme_2, image=capa_2, padx=5, bg=branco, fg=preto)
-    l_capa_2.place(x=5, y=0)
-   
-    #Filme 3
-    filme_3 = Frame(frameBaixo, width=150, height=400, bg=branco)
-    filme_3.grid(row=0, column=2, sticky=NSEW, pady=5)
-    #Nome
-    filme_nome3 = Label(filme_3, text=f'{titulos[2]}', height=2, padx=10, pady=5,
-             wraplength=100, justify='left', relief=SOLID, anchor=NW, font=('Ivy 9'), 
-             bg=branco, fg=preto, bd=1, highlightbackground='white')
-    filme_nome3.place(x=7, y=260)
-    #Data
-    data_string_3 = f'{data[2]}'
-    data_3 = datetime.strptime(data_string_3, '%Y-%m-%d')
-    data_formatada = data_3.strftime('%Y')
-    l_data_3 = Label(filme_3, text=f'Lançamento: {data_formatada}', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
-    l_data_3.place(x=5, y=310)
-    #Nota
-    l_nota_3 = Label(filme_3, text=f'Média: {nota[2]}/10', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
-    l_nota_3.place(x=5, y=330)
-    #Obtendo a imagem
-    pedido3 = requests.get(f'{poster[2]}')
-    poster_url_3 = pedido3.url
-    #Carregando a imagem
-    pedido3 = requests.get(poster_url_3)
-    poster_3 = Image.open(BytesIO(pedido3.content))
-    
-    capa_3 = poster_3
-    capa_3 = capa_3.resize((150,250))
-    capa_3 = ImageTk.PhotoImage(capa_3)
-    
-    #Poster
-    l_capa_3 = Label(filme_3, image=capa_3, padx=5, bg=branco, fg=preto)
-    l_capa_3.place(x=5, y=0)
-   
-   
+
+    # Data
+    data_string = f'{data}'
+    data_obj = datetime.strptime(data_string, '%Y-%m-%d')
+    data_formatada = data_obj.strftime('%Y')
+    l_data = Label(filme, text=f'Lançamento: {data_formatada}', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
+    l_data.place(x=5, y=310)
+
+    # Nota
+    l_nota = Label(filme, text=f'Média: {nota}/10', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
+    l_nota.place(x=5, y=330)
+
+    # Obtendo a imagem
+    pedido = requests.get(poster_url)
+    poster_url = pedido.url
+
+    # Carregando a imagem
+    poster = Image.open(BytesIO(pedido.content))
+    capa = poster.resize((150, 250))
+    capa = ImageTk.PhotoImage(capa)
+
+    # Poster
+    l_capa = Label(filme, image=capa, padx=5, bg=branco, fg=preto)
+    l_capa.place(x=5, y=0)
+
+    # Atribuir a imagem à variável global correspondente
+    if capa1 is None:
+        capa1 = capa
+    elif capa2 is None:
+        capa2 = capa
+    elif capa3 is None:
+        capa3 = capa
+ 
 #Frame meio
 #Botões
 terror = Image.open('image/terror.png')
