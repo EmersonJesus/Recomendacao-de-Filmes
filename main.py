@@ -8,7 +8,8 @@ import requests
 from io import BytesIO
 
 #Cores
-preto = '#2e2d2b'
+preto = '#232324'
+cinza = '#4a4d4f'
 branco = '#feffff'
 verde = '#4fa882'
 azul = '#03091f'
@@ -19,7 +20,7 @@ vermelho = '#f50707'
 janela = Tk()
 janela.title('')
 janela.geometry('460x560')
-janela.configure(background=branco)
+janela.configure(background=preto)
 janela.resizable(width=FALSE, height=FALSE)
 
 style = Style(janela)
@@ -29,13 +30,13 @@ style.theme_use('clam')
 frameCima = Frame(janela, width=480, height=50, bg=preto, relief='flat',) 
 frameCima.grid(row=0, column=0)
 
-framePergunta = Frame(janela, width=450, height=60, bg=branco, relief='solid',)
+framePergunta = Frame(janela, width=450, height=60, bg=preto, relief='solid',)
 framePergunta.grid(row=1, column=0, padx=5, sticky=NSEW)
 
-frameMeio = Frame(janela, width=450, height=90, bg=branco, relief='solid')
+frameMeio = Frame(janela, width=450, height=90, bg=preto, relief='solid')
 frameMeio.grid(row=2, column=0, padx=5, sticky=NSEW)
 
-frameBaixo = Frame(janela, width=300, height=460, bg=branco, relief='raised')
+frameBaixo = Frame(janela, width=300, height=460, bg=preto, relief='raised')
 frameBaixo.grid(row=3, column=0, sticky=NSEW)
 
 #Logo
@@ -47,17 +48,17 @@ logo = Label(frameCima, image=img, width=900, compound=LEFT, padx=5,
              relief=FLAT, anchor=NW, bg=preto, fg=branco)
 logo.place(x=5, y=0)
 nome = Label(frameCima, text='Recomendações de Filmes', compound=LEFT, padx=5, 
-             relief=FLAT, anchor=NW, font=('Verdana 15'), bg=preto, fg=branco)
-nome.place(x=60, y=7)
-linha = Label(frameCima, width=500, height=1, anchor=NW, font=('Verdana 1'), bg=vermelho, fg=branco)
+             relief=FLAT, anchor=NW, font=('Verdana', 15), bg=preto, fg=branco)
+nome.place(x=100, y=5)
+linha = Label(frameCima, width=500, height=1, anchor=NW, font=('Verdana 1'), bg=cinza, fg=branco)
 linha.place(x=0, y=47)
 
 #Pergunta
-pergunta = Label(framePergunta, text='Olá, quero te ajudar a escolher um filme! Qual gênero você quer?', 
-                 width=45, height=2, wraplength=320, justify='center', compound=CENTER, 
-                 padx=5, relief=FLAT, anchor=NW, font=('Verdana 11'), bg=branco, fg=preto)
-pergunta.place(x=0, y=7)
-linha = Label(framePergunta, width=500, height=1, anchor=NW, font=('Verdana 1'), bg=vermelho, fg=branco)
+pergunta = Label(framePergunta, text=f'{"Olá, quero te ajudar a escolher um filme!"}\n{"Qual gênero você quer?"}', 
+                 width=45, height=2, justify='center', compound=CENTER, 
+                 padx=5, relief=FLAT, anchor=NW, font=('Verdana 11'), bg=preto, fg=branco)
+pergunta.place(x=80, y=7)
+linha = Label(framePergunta, width=500, height=1, anchor=NW, font=('Verdana 1'), bg=cinza, fg=branco)
 linha.place(x=0, y=57)
 
 #funcao resultado
@@ -86,24 +87,27 @@ def resultado(i):
 def criar_frame_filme(frame, titulo, data, nota, poster_url):
     global capa1, capa2, capa3
 
-    filme = Frame(frame, width=150, height=400, bg=branco)
+    filme = Frame(frame, width=150, height=400, bg=preto)
     filme.grid(row=0, column=frame.grid_size()[0], sticky=NSEW, pady=5)
 
     # Nome
-    filme_nome = Label(filme, text=titulo, height=2, padx=10, pady=5,
-                       wraplength=100, justify='left', relief=SOLID, anchor=NW,
-                       font=('Ivy 9'), bg=branco, fg=preto, bd=1, highlightbackground='white')
-    filme_nome.place(x=7, y=260)
+    if len(titulo) > 30:
+        titulo = titulo[0:31]
+        
+    filme_nome = Label(filme, text=f'{titulo}.', width=15, height=2, padx=10, pady=5,
+                       wraplength=130, justify=CENTER, relief=SOLID, anchor=NW,
+                       font=('Ivy 9'), bg=preto, fg=branco, bd=1, highlightbackground='white')
+    filme_nome.place(x=6, y=260)
 
     # Data
     data_string = f'{data}'
     data_obj = datetime.strptime(data_string, '%Y-%m-%d')
     data_formatada = data_obj.strftime('%Y')
-    l_data = Label(filme, text=f'Lançamento: {data_formatada}', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
+    l_data = Label(filme, text=f'Lançamento: {data_formatada}', anchor=NW, font=('Ivy 8'), bg=preto, fg=branco)
     l_data.place(x=5, y=310)
 
     # Nota
-    l_nota = Label(filme, text=f'Média: {nota}/10', anchor=NW, font=('Ivy 8'), bg=branco, fg=preto)
+    l_nota = Label(filme, text=f'Média: {nota}/10', anchor=NW, font=('Ivy 8'), bg=preto, fg=branco)
     l_nota.place(x=5, y=330)
 
     # Obtendo a imagem
@@ -116,7 +120,7 @@ def criar_frame_filme(frame, titulo, data, nota, poster_url):
     capa = ImageTk.PhotoImage(capa)
 
     # Poster
-    l_capa = Label(filme, image=capa, padx=5, bg=branco, fg=preto)
+    l_capa = Label(filme, image=capa, padx=5, bg=cinza, fg=branco)
     l_capa.place(x=5, y=0)
 
     # Atribuir a imagem à variável global correspondente
@@ -127,6 +131,7 @@ def criar_frame_filme(frame, titulo, data, nota, poster_url):
     elif capa3 is None:
         capa3 = capa
  
+ 
 #Frame meio
 #Botões
 terror = Image.open('image/terror.png')
@@ -134,7 +139,7 @@ terror = terror.resize((28, 28))
 terror = ImageTk.PhotoImage(terror)
 
 botao = Button(frameMeio, command=lambda:resultado('TERROR'), image=terror, compound=LEFT, width=120, text=' Terror', 
-             bg=branco, fg=preto, font=('Ivy 10'), overrelief=RIDGE)
+             bg=preto, fg=branco, font=('Ivy 10'), overrelief=RIDGE)
 botao.grid(row=0, column=0, sticky=NSEW, pady=2, padx=2)
 
 acao = Image.open('image/acao.png')
@@ -142,7 +147,7 @@ acao = acao.resize((28, 28))
 acao = ImageTk.PhotoImage(acao)
 
 botao = Button(frameMeio, command=lambda:resultado('ACAO'), image=acao, compound=LEFT, width=120, text=' Ação', 
-             bg=branco, fg=preto, font=('Ivy 10'), overrelief=RIDGE)
+             bg=preto, fg=branco, font=('Ivy 10'), overrelief=RIDGE)
 botao.grid(row=0, column=1, sticky=NSEW, pady=2, padx=2)
 
 comedia = Image.open('image/comedia.png')
@@ -150,7 +155,7 @@ comedia = comedia.resize((28, 28))
 comedia = ImageTk.PhotoImage(comedia)
 
 botao = Button(frameMeio, command=lambda:resultado('COMEDIA'), image=comedia, compound=LEFT, width=120, text=' Comédia', 
-             bg=branco, fg=preto, font=('Ivy 10'), overrelief=RIDGE)
+             bg=preto, fg=branco, font=('Ivy 10'), overrelief=RIDGE)
 botao.grid(row=0, column=2, sticky=NSEW, pady=2, padx=2)
 
 drama = Image.open('image/drama.png')
@@ -158,7 +163,7 @@ drama = drama.resize((28, 28))
 drama = ImageTk.PhotoImage(drama)
 
 botao = Button(frameMeio, command=lambda:resultado('DRAMA'), image=drama, compound=LEFT, width=120, text=' Drama', 
-             bg=branco, fg=preto, font=('Ivy 10'), overrelief=RIDGE)
+             bg=preto, fg=branco, font=('Ivy 10'), overrelief=RIDGE)
 botao.grid(row=1, column=0, sticky=NSEW, pady=2, padx=2)
 
 janela.mainloop()
