@@ -16,6 +16,48 @@ azul = '#03091f'
 vermelho = '#f50707'
 
 
+def criar_botao_genero(frame, genero, imagem_path, row, column):
+    def callback():
+        resultado(genero)
+    
+    imagem = Image.open(imagem_path)
+    imagem = imagem.resize((28, 28))
+    imagem = ImageTk.PhotoImage(imagem)
+
+    botao = Button(frame, command=callback, image=imagem, compound='left', width=81, text=f' {genero.capitalize()}',
+                   bg=preto, fg=branco, font=('Ivy 10'), overrelief='ridge')
+    
+    botao.imagem = imagem
+    botao.grid(row=row, column=column, sticky='nsew', pady=2, padx=2)
+    return botao
+
+def criar_botoes_genero(frame, generos):
+    row = 0
+    column = 0
+    
+    for genero, imagem_path in generos.items():
+        criar_botao_genero(frame, genero, imagem_path, row, column)
+        
+        # Atualize a posição da linha e da coluna
+        column += 1
+        if column > 3:
+            column = 0
+            row += 1
+
+
+# Dicionário de gêneros e caminhos de imagem
+generos = {
+    'terror': 'image/terror.png',
+    'acao': 'image/acao.png',
+    'comedia': 'image/comedia.png',
+    'drama': 'image/drama.png',
+    'sci-fi': 'image/sci-fi.png',
+    'suspense': 'image/suspense.png',
+    'romance': 'image/romance.png',
+    'doc': 'image/doc.png'
+}
+
+
 #Criando Janela
 janela = Tk()
 janela.title('')
@@ -132,38 +174,5 @@ def criar_frame_filme(frame, titulo, data, nota, poster_url):
         capa3 = capa
  
  
-#Frame meio
-#Botões
-terror = Image.open('image/terror.png')
-terror = terror.resize((28, 28))
-terror = ImageTk.PhotoImage(terror)
-
-botao = Button(frameMeio, command=lambda:resultado('TERROR'), image=terror, compound=LEFT, width=120, text=' Terror', 
-             bg=preto, fg=branco, font=('Ivy 10'), overrelief=RIDGE)
-botao.grid(row=0, column=0, sticky=NSEW, pady=2, padx=2)
-
-acao = Image.open('image/acao.png')
-acao = acao.resize((28, 28))
-acao = ImageTk.PhotoImage(acao)
-
-botao = Button(frameMeio, command=lambda:resultado('ACAO'), image=acao, compound=LEFT, width=120, text=' Ação', 
-             bg=preto, fg=branco, font=('Ivy 10'), overrelief=RIDGE)
-botao.grid(row=0, column=1, sticky=NSEW, pady=2, padx=2)
-
-comedia = Image.open('image/comedia.png')
-comedia = comedia.resize((28, 28))
-comedia = ImageTk.PhotoImage(comedia)
-
-botao = Button(frameMeio, command=lambda:resultado('COMEDIA'), image=comedia, compound=LEFT, width=120, text=' Comédia', 
-             bg=preto, fg=branco, font=('Ivy 10'), overrelief=RIDGE)
-botao.grid(row=0, column=2, sticky=NSEW, pady=2, padx=2)
-
-drama = Image.open('image/drama.png')
-drama = drama.resize((28, 28))
-drama = ImageTk.PhotoImage(drama)
-
-botao = Button(frameMeio, command=lambda:resultado('DRAMA'), image=drama, compound=LEFT, width=120, text=' Drama', 
-             bg=preto, fg=branco, font=('Ivy 10'), overrelief=RIDGE)
-botao.grid(row=1, column=0, sticky=NSEW, pady=2, padx=2)
-
+criar_botoes_genero(frameMeio, generos)
 janela.mainloop()

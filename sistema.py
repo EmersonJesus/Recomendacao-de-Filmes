@@ -1,10 +1,10 @@
 import requests
 import random 
 
-def sugere_filme(i):
+def sugere_filme(i, nota_minima=7.0):
     api_key = 'c585c325aabfd4e3d16539e628332769'
     genero = acha_genero(i)
-    url = f"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&sort_by=popularity.desc&with_genres={genero}&vote_count.gte=4"
+    url = f"https://api.themoviedb.org/3/discover/movie?api_key={api_key}&sort_by=popularity.desc&with_genres={genero}&vote_average.gte={nota_minima}"
     resposta = requests.get(url).json()
     if resposta['results']:
         # Embaralhe aleatoriamente os resultados
@@ -20,13 +20,21 @@ def sugere_filme(i):
         return [titulos, caminho_capas, datas, notas]
 
 def acha_genero(i):
-    if i == 'DRAMA':
+    if i == 'drama':
         genero = "18"  
-    elif i == 'COMEDIA':
+    elif i == 'comedia':
         genero = "35" 
-    elif i  == 'ACAO':
+    elif i  == 'acao':
         genero = "28"  
-    elif i == 'TERROR':
+    elif i == 'terror':
         genero = "27" 
+    elif i == 'sci-fi':
+        genero = '878'
+    elif i == 'suspense':
+        genero = '9648'
+    elif i == 'romance':
+        genero = '10749'
+    elif i == 'doc':
+        genero = '99'
     return genero
 
